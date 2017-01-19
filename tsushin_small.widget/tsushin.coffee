@@ -23,16 +23,16 @@ render: (domEl) -> """
 <div id="container" style="width:200px; height:35px;">Loading ...</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 """
-  
-afterRender: (domEl) ->  
+
+afterRender: (domEl) ->
   $(domEl).find('#container').highcharts('StockChart'
     colors: ['rgba(255, 255, 255, 0.50)', 'rgba(255, 255, 255, 0.50)']
-    chart:   
+    chart:
       marginRight: 1
       marginTop: 1
       marginBottom: 8
       animation: Highcharts.svg
-         
+
       backgroundColor: null
       style:
         color: 'rgba(255, 255, 255, 0.50)'
@@ -61,7 +61,7 @@ afterRender: (domEl) ->
       #inputEnabled: false
       #buttonTheme: visibility: 'hidden'
       #labelStyle: visibility: 'hidden'
-      
+
     scrollbar:
       enabled:false
 
@@ -108,7 +108,7 @@ afterRender: (domEl) ->
       plotLines:[{
         value: 0
         width: 0.5
-        color: 'rgba(255, 255, 255, 0.50)'
+        color: 'rgba(255, 255, 255, 0.0)'
       }]
       labels:
         style:
@@ -116,13 +116,13 @@ afterRender: (domEl) ->
           fontSize: '8px'
         y: 7
 
-      #tickPosition:"inside"      
+      #tickPosition:"inside"
       #padding: 0
       #stackLabels: true
       #reserveSpace: false
       showFirstLabel: false
       showLastLabel: true
-                
+
       gridLineColor: null
 
       legend:
@@ -134,7 +134,7 @@ afterRender: (domEl) ->
       gridLineColor: null
 
 # ===================
-# data !! 
+# data !!
     series: [ {
       name: 'Down (kB)'
       lineWidth: 1
@@ -147,7 +147,6 @@ afterRender: (domEl) ->
        color:'#4EA565'
        data:[]
         }]
-      
     credits:
       enabled: false
 )
@@ -167,8 +166,8 @@ update:(output,domEl) ->
       data=output.split(" ");
       dataIn = parseFloat(data[0]);
       dataOut = parseFloat(data[1]);
-      console.log(dataIn)
-      console.log(dataOut)
+      # console.log(dataIn)
+      # console.log(dataOut)
       chart=$(domEl).find("#container").highcharts();
       #i=-99;
       time= (new Date).getTime();
@@ -176,8 +175,8 @@ update:(output,domEl) ->
       chart.series[0].addPoint([time, dataIn], true);
       chart.series[1].addPoint([time, dataOut], true);
 
-      console.log(err)
-      
+      # console.log(err)
+
 # the CSS style for this widget, written using Stylus
 # (http://learnboost.github.io/stylus/)
 style: """

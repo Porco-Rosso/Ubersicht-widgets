@@ -10,7 +10,7 @@ refreshFrequency: 300000000
 render: (output) -> """
 <div class="shade"></div>
   <div class="container">
-    <img class="shades-icon" src="NightShades.widget/Shadesdark.png">
+    <img class="shades-icon" src="NightShades.widget/shadesdark.png">
     <span class="table">
     <tr>
     <th><span class="level">.3</span></th>
@@ -18,9 +18,9 @@ render: (output) -> """
     <th><span class="level">.8</span></th>
   </tr>
   </span>
-  
+
   </div>
-  
+
 """
 
 style: """
@@ -38,13 +38,13 @@ style: """
     top: 0px
     left: 0px
     z-index: -100
-    
+
   .container
     position: absolute
     top: 0px
     left: 08px
     width: 200px
-    
+
   .table
     position: relative
     font-size: 12px
@@ -52,16 +52,16 @@ style: """
     color: rgba(#FFF, 0.3)
     border:1px solid rgba(#FFF, 0.3)
     border-radius: 2px
-    
+
   .level.selected
      color: rgba(#000, 0.5)
      background: rgba(#FFF, 0.3)
-     
+
   .shades-icon
     height: 10px
     -webkit-filter: drop-shadow(0px 0px 2px rgba(#FFF, 0.5))
-    
-    
+
+
 """
 
 update: (output, domEl) ->
@@ -75,7 +75,7 @@ update: (output, domEl) ->
              console.log(opacity)
              $('.shade').css({'background-color': 'black'})
              $('.shade').css({'opacity': opacity})
-             $('.shades-icon').attr("src","NightShades.widget/Shadesdark.png")
+             $('.shades-icon').attr("src","NightShades.widget/shadesdark.png")
              $('.shades-icon').css({'opacity': '1'})
              $('.shades-icon').css({'-webkit-filter': 'drop-shadow(0px 0px 2px rgba(#FFF, 0.5))'})
              $('.shade').removeClass( "transparent" )
@@ -83,17 +83,16 @@ update: (output, domEl) ->
              console.log("shades on")
         else
              $('.shade').css({'background-color': 'transparent'})
-             $('.shades-icon').attr("src","NightShades.widget/Shadeslight.png")
+             $('.shades-icon').attr("src","NightShades.widget/shadeslight.png")
              $('.shades-icon').css({'opacity': '0.5'})
              $('.shades-icon').css({'-webkit-filter': 'drop-shadow(0px 0px 0px rgba(#FFF, 0.0))'})
              $('.shade').addClass( "transparent" )
             console.log("shades off")
-    
+
     $(domEl).find('.level').click ->
              $('.level.selected').removeClass('selected')
              $(this).addClass('selected')
              opacity = $(".table").find('.level.selected').html();
              $('.shade').css({'opacity': opacity})
-        
+
         return
-        
