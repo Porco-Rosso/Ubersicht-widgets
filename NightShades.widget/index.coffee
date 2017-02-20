@@ -5,7 +5,7 @@
 
 command: ""
 
-refreshFrequency: 300000000
+refreshFrequency: 300000
 
 render: (output) -> """
 <div class="shade"></div>
@@ -37,13 +37,14 @@ style: """
     position: absolute
     top: 0px
     left: 0px
-    z-index: -100
+    z-index: -10000
 
   .container
     position: absolute
     top: 0px
     left: 08px
     width: 200px
+    z-index: 100
 
   .table
     position: relative
@@ -59,7 +60,8 @@ style: """
 
   .shades-icon
     height: 10px
-    -webkit-filter: drop-shadow(0px 0px 2px rgba(#FFF, 0.5))
+    -webkit-filter: drop-shadow(0px 0px 2px rgba(#FFF, 0.0))
+    z-index: 100
 
 
 """
@@ -85,11 +87,12 @@ update: (output, domEl) ->
              $('.shade').css({'background-color': 'transparent'})
              $('.shades-icon').attr("src","NightShades.widget/shadeslight.png")
              $('.shades-icon').css({'opacity': '0.5'})
-             $('.shades-icon').css({'-webkit-filter': 'drop-shadow(0px 0px 0px rgba(#FFF, 0.0))'})
+             $('.shades-icon').css({'-webkit-filter': 'drop-shadow(0px 0px 2px rgba(#FFF, 0.0))'})
              $('.shade').addClass( "transparent" )
             console.log("shades off")
+        return
 
-    $(domEl).find('.level').click ->
+     $(domEl).find('.level').click ->
              $('.level.selected').removeClass('selected')
              $(this).addClass('selected')
              opacity = $(".table").find('.level.selected').html();
