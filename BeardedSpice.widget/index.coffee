@@ -1,7 +1,7 @@
 # A widget to describe what's playing
 
 
-command: "osascript BeardedSpice.widget/Beardedspiceplaying2.scpt"
+command: "osascript BeardedSpice.widget/Beardedspiceplaying3.scpt"
 
 refreshFrequency: 5000
 
