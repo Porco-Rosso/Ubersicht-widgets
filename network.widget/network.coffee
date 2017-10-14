@@ -18,7 +18,7 @@ chartWidth = 40
 dataPointCount = 15
 
 ## Try 'line'!
-chartType = 'line'
+chartType = 'bar'
 
 chartIn = null
 chartOut = null

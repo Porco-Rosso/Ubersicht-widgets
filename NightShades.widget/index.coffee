@@ -37,7 +37,7 @@ style: """
     position: absolute
     top: 0px
     left: 0px
-    z-index: -10000
+    z-index: -1000
 
   .container
     position: absolute

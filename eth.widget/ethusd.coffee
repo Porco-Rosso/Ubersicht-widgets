@@ -1,13 +1,13 @@
 #command: "du -ch ~/.Trash | grep total | cut -c 1-5"
-command: "curl -s  'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=EUR' | awk '{print substr($0,8,6)}'"
+command: "curl -s 'https://coinbin.org/eth/1' | /usr/local/bin/jq -r '.coin.exchange_rate'"
+#| awk '{print substr($0,8,6)}'
 
 refreshFrequency: 6000
 
 render: (output) -> """
   <div>
-    <span>ETH</span>
+    <span>ETH/USD</span>
     <span>$ </span><a class="size">#{output}</a>
-    <br><span>Bought @ ~45,183,110</span>
   </div>
 """
 
