@@ -1,14 +1,17 @@
 # Ubersicht-widgets
-My übersicht widgets config
+My übersicht widgets configuration
 
-- Clock.widget
-- ical.widget
-- network-usage-bar.widget trash-size.widget
+- BeardedSpice.widget
+- cuteical.widget
+- eth.widget
+- free-space.widget
+- iota.widget
+- mini-system-charts.widget
+- network.widget
 - NightShades.widget
-- itunes-now.widget
 - ping-history.widget
-- free-space.widget        
-- lastfm.widget            
-- to-do-list
+- to-do-list.widget
+- trash-size.widget
 
+Outdated, but still similar screenshot:
 <img src="ScreenShot.png">

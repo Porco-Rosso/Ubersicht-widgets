@@ -1,3 +1,5 @@
 *.out
 
 network-usage-bar.widget/lib/network.out
+
+*.db
