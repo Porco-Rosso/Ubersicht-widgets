@@ -61,7 +61,7 @@ style: """
   .shades-icon
     height: 10px
     -webkit-filter: drop-shadow(0px 0px 2px rgba(#FFF, 0.0))
-    z-index: 100
+    z-index: 1000
 
 
 """
