@@ -8,8 +8,10 @@ require('./assets/lib/piety')($, document)
 
 ## Colors of chart
 colors =
-  in: 'rgb(170, 143, 190)'
-  out: 'rgb(100,202,236)'
+  low: 'rgb(136, 255, 80)'
+  med: 'rgb(210, 88, 27)',
+  high: 'rgb(245, 6, 6)'
+
 
 ## Width of chart
 chartWidth = 40
@@ -18,16 +20,15 @@ chartWidth = 40
 dataPointCount = 15
 
 ## Try 'line'!
-chartType = 'bar'
+chartType = 'line'
 
 chartIn = null
 chartOut = null
 valuesIn   = (0 for i in [0..dataPointCount])
-valuesOut  = (0 for i in [0..dataPointCount])
 
 command: """
-if [ ! -e assets/network.sh ]; then
-  "$PWD/mini-system-charts.widget/assets/network.sh"
+if [ ! -e assets/temp.sh ]; then
+  "$PWD/temp.widget/assets/temp.sh"
 else
   "$PWD/assets/network.sh"
 fi
@@ -40,7 +41,6 @@ refreshFrequency: 2000
 render: () -> """
 <div class='network'>
   <div class='chart-in'></div>
-  <div class='chart-out'></div>
   <br>
   <div class='number'></div>
 </div>
@@ -51,29 +51,39 @@ update:(output,el) ->
   ## Initialize Charts
   if not chartIn or not chartOut
     chartIn = $(".chart-in", el).peity chartType,
-      fill: [colors.in]
-      stroke: [colors.in]
+      # fill: [colors.in]
+      # stroke: [colors.in]
       width: chartWidth
-
-    chartOut = $(".chart-out", el).peity chartType,
-      fill: [colors.out]
-      stroke: [colors.out]
-      width: chartWidth
+      min: 70
+      max: 120
 
 
   @run '''
     if [ ! -e assets/network.sh ]; then
-      "$PWD/mini-system-charts.widget/assets/network.sh"
+      "$PWD/temp.widget/assets/temp.sh"
     else
-      "$PWD/assets/network.sh"
+      "$PWD/assets/temp.sh"
     fi
    ''', (err, output) ->
       data = output.split(" ");
       dataIn = parseFloat(data[0]);
-      dataOut = parseFloat(data[1]);
 
-      if isNaN(dataIn) or isNaN(dataOut)
+      if isNaN(dataIn)
         return
+
+      if (dataIn > 90)
+        chartIn = $(".chart-in", el).peity chartType,
+          fill: [colors.high]
+          stroke: [colors.high]
+      else if (dataIn > 75)
+        chartIn = $(".chart-in", el).peity chartType,
+          fill: [colors.med]
+          stroke: [colors.med]
+      else
+        chartIn = $(".chart-in", el).peity chartType,
+          fill: [colors.low]
+          stroke: [colors.low]
+
 
       ## Push the in value on the stack
       valuesIn.shift() if valuesIn.length >= dataPointCount
@@ -82,38 +92,17 @@ update:(output,el) ->
         .text(valuesIn.join(","))
         .change()
 
-      ## Push the out value on the stach
-      valuesOut.shift() if valuesIn.length >= dataPointCount
-      valuesOut.push(dataOut)
-      chartOut
-        .text(valuesOut.join(","))
-        .change()
+      ## round
+      dataIn = Math.round(dataIn)
 
-      ## Convert to kb instead of bytes
-      dataIn = dataIn / 1000
-      dataOut = dataOut / 1000
-      units = 'kb'
-
-      ## If value is large, convert to megabytes
-      if dataIn > 1000 or dataOut > 1000
-        dataIn /= 1000
-        dataOut /= 1000
-        units = 'mb'
+      units = '°C'
 
       ## Round to one decimal place
-      dataIn =  Math.round(dataIn * 10)/10
-      dataOut = Math.round(dataOut * 10)/10
-
-      dataIn = dataIn.toFixed(0)
-      dataOut = dataOut.toFixed(0)
-      dataIn = ("00" + dataIn).slice(-3)
-      dataOut = ("00" + dataOut).slice(-3)
-
-      $('.number', el).html "#{dataIn}<span style='color: #{colors.in};font-weight:bold;padding-right:15px'>↓</span> #{dataOut}<span style='color: #{colors.out};font-weight:bold;'>↑</span> #{units}"
+      $('.number', el).html "#{dataIn}<span style='color: #{colors.in};font-weight:bold;padding-right:1px'></span>#{units}"
 
 style: """
-  right: 180px
-  bottom: -1px
+  right: 285px
+  bottom: 0px
 
   color: rgba(255, 255, 255, 0.7)
   font: 12px Inconsolata, monospace, Helvetica Neue, sans-serif
@@ -125,8 +114,8 @@ style: """
 
   .number
     vertical-align bottom
-    text-align: left
-    width 105px
+    text-align: center
+    width 40px
     padding-top: 3px
     padding-bottom: 2px
 

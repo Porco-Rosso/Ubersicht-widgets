@@ -14,7 +14,7 @@ style: """
   font-family: Inconsolata
   border-bottom: solid 1px rgba(#FFF, 0.5)
   line-height: 80%
-  
+
 
   h
     display: block

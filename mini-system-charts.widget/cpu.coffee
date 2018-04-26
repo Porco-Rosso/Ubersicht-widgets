@@ -50,7 +50,7 @@ update: (output, el) ->
 
 
 style: """
-  right: 310px
+  right: 340px
   bottom: 17px
 
   span

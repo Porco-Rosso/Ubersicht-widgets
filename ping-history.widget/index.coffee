@@ -10,13 +10,13 @@ command: """
   #  domain1_name:round-trip min/avg/max/stddev = 3.439/3.439/3.439/0.000 ms
   #  domain2_name:1 packets transmitted, 0 packets received, 100.0% packet loss
   #  domain3_name:ping: cannot resolve domain4_name: Unknown host
-  
+
   ###  LIST YOUR DOMAINS HERE
   #declare -a domains=( ya.ru  25.164.13.121  8.8.8.8 )
   #declare -a aliases=( yandex Hamachi        DNS     )
-  
-  declare -a domains=( 178.23.226.86  8.8.8.8 )
-  declare -a aliases=( Server		  DNS     )
+
+  declare -a domains=(omnipus.ga 8.8.8.8)
+  declare -a aliases=(Server DNS)
   ###  AND DON'T FORGET SHORT ALIASES
 
   for i in "${!domains[@]}"; do
@@ -118,20 +118,20 @@ _update_row: (name, el) ->
   else
     el.addClass 'down' unless el.hasClass 'down'
     el.find('.ping').html ''
-  
+
   # clearing all graph area, for it's being redrawn completely at each cycle
   @contexts[name].clearRect 0, 0, @settings.canvas_w, @settings.canvas_h
-  
+
   # for how many pixels graph area moves after drawing each separate bar
   step = @settings.bar_width + @settings.bar_gap
-  
+
   do @contexts[name].beginPath
   # iterate over each value in history and draw a bar
   for p in @history[name]
     # choose color for the bar
     for g in @bars_colors when g.min < p <= g.max
       @contexts[name].fillStyle = g.color
-    
+
     # ################################################ #
     if @settings.graph_direction is 'ltr'
       # LEFT-TO-RIGHT
@@ -162,7 +162,7 @@ _update_row: (name, el) ->
       # move all graph area for 'step' pixels left
       @contexts[name].transform 1, 0, 0, 1, -step, 0
     # ################################################ #
-  
+
   # move canvas back, or else every cycle bars will be appended, not redrawn
   if @settings.graph_direction is 'ltr'
     # LEFT-TO-RIGHT
@@ -181,20 +181,20 @@ style: """
   right 0px
   color rgba(255, 255, 255, 0.7)
   border-top-left-radius 20px
-  
+
   box-sizing border-box
-      
+
   canvas
     background rgba(#000, 0.1)
-  
+
   table
     border-collapse collapse
     border-spacing 0
-    
+
     // emphasize unavailable domain with colored background
     tr.down > td
       background-color rgba(#F00, 0.3)
-    
+
     td
       vertical-align bottom
       padding 1px 3px 0
@@ -202,19 +202,19 @@ style: """
       font-size 12px
       line-height 10px
 	  text-align right
-    
+
     td.name
       font-family Inconsolata
       padding-bottom 1px
       padding-right 3px
-    
+
     td.ping
       font-weight 200
       font-size 12px
       text-align right
       padding-bottom 1px
       min-width 20px
-    
+
     td.max
       font-size 8px
       line-height 8px
